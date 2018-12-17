@@ -8,10 +8,13 @@ class SearchList extends React.Component {
 	renderList() {
 		let markup;
 		if (this.props.searchResults === null) {
+			// If there are no results to display yet, display a loading message
 			return <Loader />;
 		} else if (!this.props.searchResults.length) {
+			// If there are no results that match the query, display a "No Results" message
 			markup = <li>No results.</li>;
 		} else {
+			// If there are results, loop through and display them
 			markup = this.props.searchResults.map((curr) => {
 				return <ListItem data={curr} key={curr.id} onItemSelect={obj => this.props.onItemSelect(obj)} />;
 			});
@@ -20,6 +23,7 @@ class SearchList extends React.Component {
 	}
 
 	componentDidUpdate() {
+		// If an element had been selected, scroll to it when the list is opened
 		const listElm = document.querySelector('.search-list');
 		if (this.props.scrollToElm.id) {
 			const selectedElm = document.querySelector(`#county_id_${this.props.scrollToElm.id}`);

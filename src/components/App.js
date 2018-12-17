@@ -23,7 +23,6 @@ class App extends React.Component {
 			// 1) Create an array of all region objects
 			// 2) Create an array of states objects
 			// 3) Create an array of all county objects
-			// This will make searching easier later
 			const data = {
 				regions : [],
 				states : [],
@@ -45,32 +44,52 @@ class App extends React.Component {
 	}
 
 	updateSearch(val) {
+		// Update the state with the value recieved from the search input
 		this.setState({ value: val, selected: {name: null, id: null} });
 	}
 
 	getResults() {
+		// If the ajax call has succesfully returned data
 		if (this.state.data.counties.length) {
+			// If the user has entered a search input, use that otherwise use the full list of counties
 			let res = search.searchData(this.state.value, this.state.data.counties);
 			res = res !== null ? res : this.state.data.counties;
+			// Return an updated data object that contains the counties as children of their states as children of their regions
 			res = search.getParents( search.getParents(res, this.state.data.states), this.state.data.regions);
 			return res;
 		}
+		// Otherwise return null
 		return null;
 	}
 
 	onFocusChange(focus) {
+		// Update whether the focus is currently in the dropdown box
 		this.setState({ searchFocus: focus });
 	}
 
 	onItemSelect(obj) {
+		// If a list item has been selected, set it to the selected state
 		this.setState({ selected: obj });
 	}
 
 	render() {
 		return (
 			<div className="county-search-container">
-				<SearchBar onSearchUpdate={(val) => this.updateSearch(val)} setFocus={(focus) => this.onFocusChange(focus)} value={this.state.selected.name} />
-				<SearchList searchResults={this.getResults()} data={this.state.data} menuOpen={this.state.searchFocus} onItemSelect={obj => this.onItemSelect(obj)} scrollToElm={this.state.selected} />
+
+				<SearchBar
+					onSearchUpdate={(val) => this.updateSearch(val)}
+					setFocus={(focus) => this.onFocusChange(focus)}
+					value={this.state.selected.name}
+				/>
+
+				<SearchList
+					searchResults={this.getResults()}
+					data={this.state.data}
+					menuOpen={this.state.searchFocus}
+					onItemSelect={obj => this.onItemSelect(obj)}
+					scrollToElm={this.state.selected}
+				/>
+
 			</div>
 		);
 	}
