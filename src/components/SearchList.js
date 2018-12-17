@@ -20,8 +20,13 @@ class SearchList extends React.Component {
 	}
 
 	componentDidUpdate() {
+		const listElm = document.querySelector('.search-list');
 		if (this.props.scrollToElm.id) {
-			console.log(this.props.scrollToElm.id);
+			const selectedElm = document.querySelector(`#county_id_${this.props.scrollToElm.id}`);
+			const topPos = selectedElm.offsetTop - 96;
+			listElm.scrollTop = topPos;
+		} else {
+			listElm.scrollTop = 0;
 		}
 	}
 

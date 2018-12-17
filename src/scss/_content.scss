@@ -23,6 +23,9 @@ input, li, button, * {
 		background-color: transparent;
 		border: solid 1px #999;
 		z-index: 10;
+		&:hover:not(:focus) {
+			cursor: pointer;
+		}
 		&:focus ~ button.show-list {
 			z-index: 15;
 			&:after {

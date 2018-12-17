@@ -35,14 +35,20 @@ class SearchBar extends React.Component {
 					id="search-input"
 					placeholder="Please select a county"
 					type="text"
+					title="Please select a county"
 					required={true}
 					value={this.state.term}
 					onChange={this.onSearchChange}
 					onFocus={this.onSetFocus}
 					onBlur={this.onRemoveFocus}
 				/>
-				<button className="clear-selection" onClick={this.onClearVal}>Clear Selection</button>
-				<button className="show-list">Show list</button>
+				<button
+					className="clear-selection"
+					onClick={this.onClearVal}
+					title="Clear Selection">
+					Clear Selection
+				</button>
+				<button className="show-list" title="Toggle Dropdown">Show list</button>
 			</div>
 		);
 	}

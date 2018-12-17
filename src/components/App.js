@@ -8,7 +8,7 @@ class App extends React.Component {
 	state = {
 		value: '',
 		searchFocus: false,
-		selected: {},
+		selected: {name: null, id: null},
 		data: {
 			regions : [],
 			states : [],
@@ -45,7 +45,7 @@ class App extends React.Component {
 	}
 
 	updateSearch(val) {
-		this.setState({ value: val, selected: {} });
+		this.setState({ value: val, selected: {name: null, id: null} });
 	}
 
 	getResults() {
