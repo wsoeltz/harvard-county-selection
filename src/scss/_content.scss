@@ -1,0 +1,141 @@
+input, li, button, * {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 18px;
+}
+
+.county-search-container {
+	padding-top: 50px;
+	max-width: 500px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.search-bar {
+	position: relative;
+	input {
+		width: 100%;
+		padding: 10px;
+		position: relative;
+		background-color: transparent;
+		border: solid 1px #999;
+		z-index: 10;
+		&:focus ~ button.show-list {
+			z-index: 15;
+			&:after {
+				content: '▲';
+			}
+		}
+		&:valid ~ button.clear-selection {
+			display: block;
+		}
+	}
+	button.show-list {
+		z-index: 0;
+		position: absolute;
+		margin: auto;
+		width: 30px;
+		height: 30px;
+		top: 0;
+		bottom: 0;
+		right: 10px;
+		overflow: hidden;
+		text-indent: -100000px;
+		background-color: transparent;
+		border: none;
+		border-left: solid 1px #999;
+		color: #999;
+		&:after {
+			content: '▼';
+			text-indent: 0;
+			display: block;
+			width: 100%;
+			position: absolute;
+			top: 9px;
+			right: -3px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	button.clear-selection {
+		display: none;
+		z-index: 20;
+		position: absolute;
+		margin: auto;
+		width: 30px;
+		height: 30px;
+		top: 0;
+		bottom: 0;
+		right: 50px;
+		overflow: hidden;
+		text-indent: -100000px;
+		background-color: transparent;
+		border: none;
+		color: #999;
+		&:hover {
+			cursor: pointer;
+		}
+		&:after {
+			content: 'X';
+			text-indent: 0;
+			display: block;
+			width: 100%;
+			position: absolute;
+			top: 9px;
+			left: 0px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.search-list {
+	border: solid 1px #999;
+	border-top: none;
+	height: 375px;
+	overflow-y: auto;
+	li {
+		span {
+			display: block;
+			padding: 4px 20px;
+		}
+		li {
+			span {
+				padding-left: 40px;
+			}
+			li {
+				button {
+					padding: 4px 20px 4px 60px;
+				}
+			}
+		}
+	}
+	button {
+		display: block;
+		width: 100%;
+		height: 100%;
+		text-align: left;
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		&:hover {
+			cursor: pointer;
+			background-color: #e7f0f7;
+		}
+	}
+	&.visible-false {
+		display: none;
+	}
+}
+
+.loader {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 18px;
+	text-align: center;
+	padding: 20px;
+}

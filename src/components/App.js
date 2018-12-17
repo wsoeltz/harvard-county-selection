@@ -7,6 +7,8 @@ import * as search from '../model/search';
 class App extends React.Component {
 	state = {
 		value: '',
+		searchFocus: false,
+		selected: {},
 		data: {
 			regions : [],
 			states : [],
@@ -43,7 +45,7 @@ class App extends React.Component {
 	}
 
 	updateSearch(val) {
-		this.setState({ value: val });
+		this.setState({ value: val, selected: {} });
 	}
 
 	getResults() {
@@ -56,11 +58,19 @@ class App extends React.Component {
 		return null;
 	}
 
+	onFocusChange(focus) {
+		this.setState({ searchFocus: focus });
+	}
+
+	onItemSelect(obj) {
+		this.setState({ selected: obj });
+	}
+
 	render() {
 		return (
-			<div>
-				<SearchBar onSearchUpdate={(val) => this.updateSearch(val)} />
-				<SearchList searchResults={this.getResults()} data={this.state.data} />
+			<div className="county-search-container">
+				<SearchBar onSearchUpdate={(val) => this.updateSearch(val)} setFocus={(focus) => this.onFocusChange(focus)} value={this.state.selected.name} />
+				<SearchList searchResults={this.getResults()} data={this.state.data} menuOpen={this.state.searchFocus} onItemSelect={obj => this.onItemSelect(obj)} scrollToElm={this.state.selected} />
 			</div>
 		);
 	}

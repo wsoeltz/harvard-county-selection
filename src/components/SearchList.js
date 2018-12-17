@@ -1,6 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem';
-import Spinner from './Spinner';
+import Loader from './Loader';
 
 class SearchList extends React.Component {
 	state = {};
@@ -8,20 +8,27 @@ class SearchList extends React.Component {
 	renderList() {
 		let markup;
 		if (this.props.searchResults === null) {
-			return <Spinner />;
+			return <Loader />;
 		} else if (!this.props.searchResults.length) {
 			markup = <li>No results.</li>;
 		} else {
 			markup = this.props.searchResults.map((curr) => {
-				return <ListItem data={curr} key={curr.id} />;
+				return <ListItem data={curr} key={curr.id} onItemSelect={obj => this.props.onItemSelect(obj)} />;
 			});
 		}
 		return markup;
 	}
 
+	componentDidUpdate() {
+		if (this.props.scrollToElm.id) {
+			console.log(this.props.scrollToElm.id);
+		}
+	}
+
+
 	render() {
 		return (
-			<ul>
+			<ul className={`search-list visible-${this.props.menuOpen}`}>
 				{this.renderList()}
 			</ul>
 		);

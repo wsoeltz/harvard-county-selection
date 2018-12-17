@@ -3,12 +3,16 @@ import React from 'react';
 class ListItem extends React.Component {
 	state = {};
 
+	onItemClick(obj) {
+		this.props.onItemSelect(obj);
+	}
+
 	renderListItem(elm) {
 		const self = this;
 		if (elm.hasOwnProperty('children')) {
 			return (
 				<li key={elm.id}>
-					{elm.name}
+					<span>{elm.name}</span>
 					<ul> {
 						elm.children.map(curr => {
 							return (self.renderListItem(curr));
@@ -18,7 +22,7 @@ class ListItem extends React.Component {
 				</li>
 			);
 		}
-		return <li key={elm.id}><button>{elm.name}</button></li>;
+		return <li key={elm.id} id={`county_id_${elm.id}`}><button onMouseDown={obj => this.onItemClick(elm)}>{elm.name}</button></li>;
 	}
 
 	render() {
