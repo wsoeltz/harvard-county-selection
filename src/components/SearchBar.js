@@ -55,7 +55,11 @@ class SearchBar extends React.Component {
 					title="Clear Selection">
 					Clear Selection
 				</button>
-				<button className="show-list" title="Toggle Dropdown">Show list</button>
+				<button
+					className="show-list"
+					title="Toggle Dropdown">
+					Show list
+				</button>
 			</div>
 		);
 	}
