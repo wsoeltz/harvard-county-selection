@@ -1,6 +1,10 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
+	constructor(props) {
+		super(props);
+		this.inputRef = React.createRef();
+	}
 	// Value is set via parent component
 
 	onSearchChange = e => {
@@ -17,8 +21,7 @@ class SearchBar extends React.Component {
 		// 3) App.js will update it's state to reflect the changes here
 		// 4) Set the focus back to the input
 		const val = '';
-		const input = e.target.previousSibling;
-		input.value = val;
+		const input = this.inputRef.current;
 		this.props.onSearchUpdate(val);
 		input.focus();
 	}
@@ -36,7 +39,7 @@ class SearchBar extends React.Component {
 		return (
 			<div className="search-bar">
 				<input
-					id="search-input"
+					ref={this.inputRef}
 					placeholder="Please select a county"
 					type="text"
 					title="Please select a county"
