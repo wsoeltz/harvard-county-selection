@@ -3,23 +3,21 @@ import ListItem from './ListItem';
 import Loader from './Loader';
 
 class SearchList extends React.Component {
-	state = {};
 
 	renderList() {
-		let markup;
 		if (this.props.searchResults === null) {
 			// If there are no results to display yet, display a loading message
 			return <Loader />;
 		} else if (!this.props.searchResults.length) {
 			// If there are no results that match the query, display a "No Results" message
-			markup = <li>No results.</li>;
+			return <li className="no-results">No results.</li>;
 		} else {
 			// If there are results, loop through and display them
-			markup = this.props.searchResults.map((curr) => {
+			const markup = this.props.searchResults.map((curr) => {
 				return <ListItem data={curr} key={curr.id} onItemSelect={obj => this.props.onItemSelect(obj)} />;
 			});
+			return markup;
 		}
-		return markup;
 	}
 
 	componentDidUpdate() {
