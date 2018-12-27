@@ -6,9 +6,8 @@ import * as search from '../model/search';
 
 class App extends React.Component {
 	state = {
-		value: '',
 		searchFocus: false,
-		selected: {name: null, id: null},
+		value: {name: '', id: null},
 		data: {
 			regions : [],
 			states : [],
@@ -45,14 +44,14 @@ class App extends React.Component {
 
 	updateSearch(val) {
 		// Update the state with the value recieved from the search input
-		this.setState({ value: val, selected: {name: null, id: null} });
+		this.setState({value: {name: val, id: null} });
 	}
 
 	getResults() {
 		// If the ajax call has succesfully returned data
 		if (this.state.data.counties.length) {
 			// If the user has entered a search input, use that otherwise use the full list of counties
-			let res = search.searchData(this.state.value, this.state.data.counties);
+			let res = search.searchData(this.state.value.name, this.state.data.counties);
 			res = res !== null ? res : this.state.data.counties;
 			// Return an updated data object that contains the counties as children of their states as children of their regions
 			res = search.getParents( search.getParents(res, this.state.data.states), this.state.data.regions);
@@ -68,8 +67,8 @@ class App extends React.Component {
 	}
 
 	onItemSelect(obj) {
-		// If a list item has been selected, set it to the selected state
-		this.setState({ selected: obj });
+		// If a list item has been selected, set it to the value state
+		this.setState({ value: obj });
 	}
 
 	render() {
@@ -79,7 +78,7 @@ class App extends React.Component {
 				<SearchBar
 					onSearchUpdate={(val) => this.updateSearch(val)}
 					setFocus={(focus) => this.onFocusChange(focus)}
-					value={this.state.selected.name}
+					value={this.state.value.name}
 				/>
 
 				<SearchList
@@ -87,7 +86,7 @@ class App extends React.Component {
 					data={this.state.data}
 					menuOpen={this.state.searchFocus}
 					onItemSelect={obj => this.onItemSelect(obj)}
-					scrollToElm={this.state.selected}
+					scrollToElm={this.state.value}
 				/>
 
 			</div>

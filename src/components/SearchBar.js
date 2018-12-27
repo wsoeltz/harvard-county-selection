@@ -1,28 +1,25 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
-	state = { term: '' };
+	// Value is set via parent component
 
 	onSearchChange = e => {
 		// On change of the search input,
-		// 1) Send the value back to App.js
-		// 2) Update the local state so as to keep the value consistent
+		// 1) Send the value back to App.js and it will update the state to reflect the changes here
 		const val = e.target.value;
 		this.props.onSearchUpdate(val);
-		this.setState({ term: val });
 	}
 
 	onClearVal = e => {
 		// On pressing of the clear value button,
 		// 1) Clear the value to an empty string
 		// 2) Send the new empty value back to App.js
-		// 3) Update the local state so as to keep the value consistent & trigger a reload
+		// 3) App.js will update it's state to reflect the changes here
 		// 4) Set the focus back to the input
 		const val = '';
 		const input = e.target.previousSibling;
 		input.value = val;
 		this.props.onSearchUpdate(val);
-		this.setState({ term: val });
 		input.focus();
 	}
 
@@ -35,8 +32,7 @@ class SearchBar extends React.Component {
 		// On loss of focus, signal back to App.js so that it can handle functions with the list
 		// If there is a props.value that means the loss of focus is due to a list item being clicked
 		// Update the current value of the input field to match the value of the list item
-		const val = this.props.value === null ? this.state.term : this.props.value;
-		this.setState({ term: val });
+		const val = this.props.value === null ? this.state.value : this.props.value;
 		this.props.setFocus(false);
 	}
 
@@ -49,7 +45,7 @@ class SearchBar extends React.Component {
 					type="text"
 					title="Please select a county"
 					required={true}
-					value={this.state.term}
+					value={this.props.value}
 					onChange={this.onSearchChange}
 					onFocus={this.onSetFocus}
 					onBlur={this.onRemoveFocus}
