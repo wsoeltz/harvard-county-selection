@@ -23,17 +23,13 @@ class SearchBar extends React.Component {
 		input.focus();
 	}
 
-	onSetFocus = e => {
-		// On focus, signal back to App.js so that it can handle functions with the list
-		this.props.setFocus(true);
-	}
-
-	onRemoveFocus = e => {
-		// On loss of focus, signal back to App.js so that it can handle functions with the list
-		// If there is a props.value that means the loss of focus is due to a list item being clicked
-		// Update the current value of the input field to match the value of the list item
-		const val = this.props.value === null ? this.state.value : this.props.value;
-		this.props.setFocus(false);
+	focusChange = e => {
+		// On change of focus, signal back to App.js so that it can handle functions with the list and value setting
+		let isFocused = false;
+		if (e.type === 'focus') {
+			isFocused = true;
+		}
+		this.props.setFocus(isFocused);
 	}
 
 	render() {
@@ -47,8 +43,8 @@ class SearchBar extends React.Component {
 					required={true}
 					value={this.props.value}
 					onChange={this.onSearchChange}
-					onFocus={this.onSetFocus}
-					onBlur={this.onRemoveFocus}
+					onFocus={this.focusChange}
+					onBlur={this.focusChange}
 				/>
 				<button
 					className="clear-selection"
