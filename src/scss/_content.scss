@@ -21,10 +21,20 @@ input, li, button, * {
 		padding: 10px;
 		position: relative;
 		background-color: transparent;
-		border: solid 1px #999;
+		border: solid 1px rgba(#999, .5);
 		z-index: 10;
+		border-radius: 4px;
+		transition: box-shadow .3s ease-in;
+		&:focus {
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 0;
+		}
 		&:hover:not(:focus) {
 			cursor: pointer;
+			box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.1);
+			~ button.show-list {
+				color: lightblue;
+			}
 		}
 		&:focus ~ button.show-list {
 			z-index: 15;
@@ -49,8 +59,12 @@ input, li, button, * {
 		text-indent: -100000px;
 		background-color: transparent;
 		border: none;
-		border-left: solid 1px #999;
+		border-left: solid 1px rgba(#999, .5);
 		color: #999;
+		&:hover {
+			color: lightblue;
+			cursor: pointer;
+		}
 		&:after {
 			content: '▼';
 			text-indent: 0;
@@ -59,6 +73,7 @@ input, li, button, * {
 			position: absolute;
 			top: 6px;
 			right: -3px;
+			transition: color .2s ease-in;
 		}
 		&:focus {
 			outline: none;
@@ -81,15 +96,19 @@ input, li, button, * {
 		color: #999;
 		&:hover {
 			cursor: pointer;
+			&:after {
+				color: tomato;
+			}
 		}
 		&:after {
-			content: 'X';
+			content: 'x';
 			text-indent: 0;
 			display: block;
 			width: 100%;
 			position: absolute;
-			top: 6px;
+			top: 3px;
 			left: 0px;
+			transition: color .2s ease-in;
 		}
 		&:focus {
 			outline: none;
@@ -98,17 +117,20 @@ input, li, button, * {
 }
 
 .search-list {
-	border: solid 1px #999;
+	border: solid 1px rgba(#999, .5);
+	box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.1);
 	border-top: none;
 	height: 375px;
 	overflow-y: auto;
+	position: relative;
 	li {
 		display: block;
+		cursor: default;
 		&.level-region {
 			padding: 8px 20px;
 		}
 		&.level-state {
-			padding-left: 40px;
+			padding: 8px 20px 8px 40px;
 		}
 		button {
 			padding: 4px 20px 4px 60px;
@@ -126,9 +148,6 @@ input, li, button, * {
 			cursor: pointer;
 			background-color: #e7f0f7;
 		}
-	}
-	&.visible-false {
-		display: none;
 	}
 }
 
