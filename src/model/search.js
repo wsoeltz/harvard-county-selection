@@ -1,17 +1,3 @@
-export const searchData = (term, data) => {
-	// return an array of data that matches the term
-	if (data.length && term !== '') {
-		return data.filter(curr => {
-			if (curr.name.toUpperCase().includes(term.toUpperCase())) {
-				return true;
-			}
-			return false;
-		});
-	} else {
-		return null;
-	}
-}
-
 export const getParents = (childArr, parentArr) => {
 	// return an array of parent elements with an array of their children inside of it
 	if (childArr !== null && parentArr !== null) {

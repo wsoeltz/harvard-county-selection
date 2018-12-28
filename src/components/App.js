@@ -8,11 +8,7 @@ class App extends React.Component {
 	state = {
 		searchFocus: false,
 		value: {name: '', id: null},
-		data: {
-			regions : [],
-			states : [],
-			counties : []
-		}
+		data: []
 	};
 
 	async componentDidMount() {
@@ -36,7 +32,10 @@ class App extends React.Component {
 					data.counties.push(curr);
 				}
 			});
-			this.setState({ data: data });
+			// 4) Use the arrays to put together the final dataset that nests all of the child data within the parents.
+			const dataset = search.getParents( search.getParents(data.counties, data.states), data.regions);
+
+			this.setState({ data: dataset });
 		} catch(err) {
 			console.error(err)
 		}
@@ -47,15 +46,10 @@ class App extends React.Component {
 		this.setState({value: {name: val, id: null} });
 	}
 
-	getResults() {
-		// If the ajax call has succesfully returned data
-		if (this.state.data.counties.length) {
-			// If the user has entered a search input, use that otherwise use the full list of counties
-			let res = search.searchData(this.state.value.name, this.state.data.counties);
-			res = res !== null ? res : this.state.data.counties;
-			// Return an updated data object that contains the counties as children of their states as children of their regions
-			res = search.getParents( search.getParents(res, this.state.data.states), this.state.data.regions);
-			return res;
+	getData() {
+		if (this.state.data.length) {
+			// If the ajax call has succesfully returned data
+			return this.state.data;
 		}
 		// Otherwise return null
 		return null;
@@ -82,11 +76,10 @@ class App extends React.Component {
 				/>
 
 				<SearchList
-					searchResults={this.getResults()}
-					data={this.state.data}
+					data={this.getData()}
 					menuOpen={this.state.searchFocus}
 					onItemSelect={obj => this.onItemSelect(obj)}
-					scrollToElm={this.state.value}
+					value={this.state.value}
 				/>
 
 			</div>

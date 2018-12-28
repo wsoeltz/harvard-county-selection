@@ -103,19 +103,15 @@ input, li, button, * {
 	height: 375px;
 	overflow-y: auto;
 	li {
-		span {
-			display: block;
-			padding: 4px 20px;
+		display: block;
+		&.level-region {
+			padding: 8px 20px;
 		}
-		li {
-			span {
-				padding-left: 40px;
-			}
-			li {
-				button {
-					padding: 4px 20px 4px 60px;
-				}
-			}
+		&.level-state {
+			padding-left: 40px;
+		}
+		button {
+			padding: 4px 20px 4px 60px;
 		}
 	}
 	button {
