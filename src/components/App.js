@@ -75,12 +75,14 @@ class App extends React.Component {
 					value={this.state.value.name}
 				/>
 
-				<SearchList
-					data={this.getData()}
-					menuOpen={this.state.searchFocus}
-					onItemSelect={obj => this.onItemSelect(obj)}
-					value={this.state.value}
-				/>
+				{
+					this.state.searchFocus &&
+					<SearchList
+						data={this.getData()}
+						onItemSelect={obj => this.onItemSelect(obj)}
+						value={this.state.value}
+					/>
+				}
 
 			</div>
 		);

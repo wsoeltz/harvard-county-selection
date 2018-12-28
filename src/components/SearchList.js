@@ -3,7 +3,6 @@ import ListItem from './ListItem';
 import Loader from './Loader';
 
 class SearchList extends React.Component {
-
 	renderList() {
 		const data = this.props.data;
 		if (data === null) {
@@ -38,15 +37,18 @@ class SearchList extends React.Component {
 						key={curr.id}
 						data={curr}
 						onItemSelect={this.props.onItemSelect}
+						scrollToElm={this.scrollToElm}
 					/>);
 					newArr = newArr.concat(childArr);
 				}
-			} else if (curr.name.toUpperCase().includes(this.props.value.name.toUpperCase())) {
-				// If this is the lowest level of the list, push it to our new array, to be returned to the function that called it
+			} else if (curr.name.toUpperCase().includes(this.props.value.name.toUpperCase()) || this.props.value.id !== null) {
+				// 1) If this is the lowest level of the list, check if the name is equal to our search value OR if we currently have an item selected (in which case the search term is essentially cleared and we revert to showing all items).
+				// 2) Push it to our new array, to be returned to the function that called it
 				newArr.push( <ListItem
 					key={curr.id}
 					data={curr}
 					onItemSelect={this.props.onItemSelect}
+					scrollToElm={this.scrollToElm}
 				/>);
 			}
 		});
@@ -55,22 +57,19 @@ class SearchList extends React.Component {
 		return newArr;
 	}
 
-	componentDidUpdate() {
-		/*// If an element had been selected, scroll to it when the list is opened
-		const listElm = document.querySelector('.search-list');
-		if (this.props.scrollToElm.id) {
-			const selectedElm = document.querySelector(`#county_id_${this.props.scrollToElm.id}`);
-			const topPos = selectedElm.offsetTop - 96;
+	scrollToElm = (elm, id) => {
+		// If an element has been selected, scroll to it
+		if (this.props.value.id === id) {
+			// Using the parentNode selector here instead of ref as ref cannot be accessed at the time at which this is called by the nested ListItem
+			const listElm = elm.parentNode;
+			const topPos = elm.offsetTop;
 			listElm.scrollTop = topPos;
-		} else {
-			listElm.scrollTop = 0;
-		}*/
+		}
 	}
-
 
 	render() {
 		return (
-			<ul className={`search-list visible-${this.props.menuOpen}`}>
+			<ul className="search-list">
 				{this.renderList()}
 			</ul>
 		);
